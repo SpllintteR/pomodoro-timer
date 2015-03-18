@@ -1,9 +1,11 @@
-package co.ikust.pomodorotimer;
+package co.ikust.pomodorotimer.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import co.ikust.pomodorotimer.R;
 
 
 public class TasksActivity extends ActionBarActivity {
