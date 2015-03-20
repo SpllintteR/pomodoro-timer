@@ -48,34 +48,5 @@ public class SplashActivity extends Activity {
 
         trelloDialog.show();
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
-//                        TrelloConstants.APP_KEY,
-//                        TrelloConstants.APP_SECRET
-//                );
-//
-//                OAuthProvider oAuthProvider = new CommonsHttpOAuthProvider(
-//                        TrelloConstants.REQUEST_URL,
-//                        TrelloConstants.ACCESS_URL,
-//                        TrelloConstants.AUTHORIZE_URL
-//                );
-//
-//                try {
-//                    String url = oAuthProvider.retrieveRequestToken(consumer, OAuth.OUT_OF_BAND);
-//                    Log.d("OAuth", url);
-//                } catch (OAuthMessageSignerException e) {
-//                    e.printStackTrace();
-//                } catch (OAuthNotAuthorizedException e) {
-//                    e.printStackTrace();
-//                } catch (OAuthExpectationFailedException e) {
-//                    e.printStackTrace();
-//                } catch (OAuthCommunicationException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-
     }
 }

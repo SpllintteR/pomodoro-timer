@@ -5,6 +5,9 @@ import android.app.Application;
 import javax.inject.Inject;
 
 import co.ikust.pomodorotimer.rest.RestService;
+import co.ikust.pomodorotimer.rest.oauth.TokenManager;
+import co.ikust.pomodorotimer.trello.Trello;
+import co.ikust.pomodorotimer.trello.TrelloError;
 import dagger.ObjectGraph;
 
 /**
@@ -25,14 +28,24 @@ public class PomodoroTimerApplication extends Application {
     @Inject
     RestService apiService;
 
+    @Inject
+    TokenManager tokenManager;
+
+    /**
+     * Injects application dependencies and constructs global ObjectGraph.
+     */
+    private void injectDependencies() {
+        globalGraph = ObjectGraph.create(new ApplicationModule());
+        globalGraph.inject(this);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         instance = this;
 
-        globalGraph = ObjectGraph.create(new ApplicationModule());
-        globalGraph.inject(this);
+        injectDependencies();
     }
 
     /**
@@ -57,5 +70,45 @@ public class PomodoroTimerApplication extends Application {
         return instance.apiService;
     }
 
+    /**
+     * Returns true if there is a stored OAuth access token.
+     *
+     * @return true if there is a stored OAuth token
+     */
+    public static boolean hasAccessToken() {
+        return instance.tokenManager.hasToken();
+    }
 
+    /**
+     * Updates the OAuth token. Notifies success or failure through callback.
+     * RestService is rebuilt after successfull token refresh.
+     */
+    public static void refreshAccessToken(final Trello.DialogListener callback) { //TODO replace with token callback
+        instance.tokenManager.refreshToken(new Trello.DialogListener() {
+            @Override
+            public void onComplete(String accessKey, String accessSecret) {
+                //Re-inject dependencies to trigger constructing new RestService which uses
+                //new OAuth access token.
+                instance.injectDependencies();
+
+                if (callback != null) {
+                    callback.onComplete(accessKey, accessSecret);
+                }
+            }
+
+            @Override
+            public void onError(TrelloError error) {
+                if (callback != null) {
+                    callback.onError(error);
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                if (callback != null) {
+                    callback.onCancel();
+                }
+            }
+        });
+    }
 }
