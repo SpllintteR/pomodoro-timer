@@ -6,8 +6,6 @@ import javax.inject.Inject;
 
 import co.ikust.pomodorotimer.rest.RestService;
 import co.ikust.pomodorotimer.rest.oauth.TokenManager;
-import co.ikust.pomodorotimer.trello.Trello;
-import co.ikust.pomodorotimer.trello.TrelloError;
 import dagger.ObjectGraph;
 
 /**
@@ -83,21 +81,21 @@ public class PomodoroTimerApplication extends Application {
      * Updates the OAuth token. Notifies success or failure through callback.
      * RestService is rebuilt after successfull token refresh.
      */
-    public static void refreshAccessToken(final Trello.DialogListener callback) { //TODO replace with token callback
-        instance.tokenManager.refreshToken(new Trello.DialogListener() {
+    public static void refreshAccessToken(final TokenManager.RefreshTokenCallback callback) { //TODO replace with token callback
+        instance.tokenManager.refreshToken(new TokenManager.RefreshTokenCallback() {
             @Override
-            public void onComplete(String accessKey, String accessSecret) {
+            public void onComplete() {
                 //Re-inject dependencies to trigger constructing new RestService which uses
                 //new OAuth access token.
                 instance.injectDependencies();
 
                 if (callback != null) {
-                    callback.onComplete(accessKey, accessSecret);
+                    callback.onComplete();
                 }
             }
 
             @Override
-            public void onError(TrelloError error) {
+            public void onError(Throwable error) {
                 if (callback != null) {
                     callback.onError(error);
                 }
@@ -110,5 +108,6 @@ public class PomodoroTimerApplication extends Application {
                 }
             }
         });
+
     }
 }

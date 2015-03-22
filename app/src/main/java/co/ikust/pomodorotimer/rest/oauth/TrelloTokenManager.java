@@ -1,6 +1,5 @@
 package co.ikust.pomodorotimer.rest.oauth;
 
-import co.ikust.pomodorotimer.trello.Trello;
 import oauth.signpost.OAuthConsumer;
 
 /**
@@ -11,7 +10,7 @@ import oauth.signpost.OAuthConsumer;
 public class TrelloTokenManager implements TokenManager {
 
     @Override
-    public void refreshToken(Trello.DialogListener callback) {
+    public void refreshToken(RefreshTokenCallback callback) {
 
     }
 

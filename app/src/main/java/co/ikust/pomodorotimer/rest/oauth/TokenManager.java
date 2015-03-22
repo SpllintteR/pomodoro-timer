@@ -1,6 +1,5 @@
 package co.ikust.pomodorotimer.rest.oauth;
 
-import co.ikust.pomodorotimer.trello.Trello;
 import oauth.signpost.OAuthConsumer;
 
 /**
@@ -8,7 +7,28 @@ import oauth.signpost.OAuthConsumer;
  */
 public interface TokenManager {
 
-    void refreshToken(Trello.DialogListener callback); //replace with another callback
+    public interface RefreshTokenCallback {
+        /**
+         * Called when the OAuth token refresh completes successfully.
+         */
+        public void onComplete();
+
+        /**
+         * Called when a dialog has an error.
+         *
+         * Executed by the thread that initiated the dialog.
+         */
+        public void onError(Throwable error);
+
+        /**
+         * Called when a dialog is canceled by the user.
+         *
+         * Executed by the thread that initiated the dialog.
+         */
+        public void onCancel();
+    }
+
+    void refreshToken(RefreshTokenCallback callback);
 
     boolean hasToken();
 
