@@ -2,10 +2,18 @@ package co.ikust.pomodorotimer.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import co.ikust.pomodorotimer.PomodoroTimerApplication;
 import co.ikust.pomodorotimer.R;
+import co.ikust.pomodorotimer.rest.models.Board;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class TasksActivity extends ActionBarActivity {
@@ -14,6 +22,19 @@ public class TasksActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
+
+        PomodoroTimerApplication.getRestService().getBoards(new Callback<ArrayList<Board>>() {
+            @Override
+            public void success(ArrayList<Board> board, Response response) {
+                Log.d("Config", "Board fetch success");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Config", "Board fetch error");
+                error.printStackTrace();
+            }
+        });
     }
 
 

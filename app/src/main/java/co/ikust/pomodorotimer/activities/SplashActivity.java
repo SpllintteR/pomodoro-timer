@@ -39,18 +39,7 @@ public class SplashActivity extends Activity {
             PomodoroTimerApplication.refreshAccessToken(this, new TokenManager.RefreshTokenCallback() {
                 @Override
                 public void onComplete() {
-                    PomodoroTimerApplication.getRestService().getBoards(new Callback<ArrayList<Board>>() {
-                        @Override
-                        public void success(ArrayList<Board> board, Response response) {
-                            Log.d("Config", "Board fetch success");
-                        }
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            Log.d("Config", "Board fetch error");
-                            error.printStackTrace();
-                        }
-                    });
                 }
 
                 @Override

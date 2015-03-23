@@ -12,7 +12,7 @@ import retrofit.http.GET;
 public interface RestService {
 
 
-    @GET("/1/members/me/boards")
+    @GET("/1/members/me/boards?fields=id,name&lists=all&list_fields=name")
     void getBoards(Callback<ArrayList<Board>> callback);
 
 
