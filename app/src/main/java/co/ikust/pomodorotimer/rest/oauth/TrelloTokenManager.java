@@ -34,7 +34,7 @@ public class TrelloTokenManager implements TokenManager {
 
         // Set up the input
         final EditText input = new EditText(activityContext);
-        input.setText("5f2ef7135ff5d33603f9514c82de2ae560e679aa3280c82741481be3735ddc1c");
+        input.setText("619d956b32891cb3d31e50c601eeec53e2981d9fb2e4342a31926803677851ec");
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         builder.setView(input);

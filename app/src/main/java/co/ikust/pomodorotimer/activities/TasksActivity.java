@@ -1,19 +1,20 @@
 package co.ikust.pomodorotimer.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
-import co.ikust.pomodorotimer.PomodoroTimerApplication;
 import co.ikust.pomodorotimer.R;
 import co.ikust.pomodorotimer.rest.models.Board;
+import co.ikust.pomodorotimer.rest.models.List;
+import co.ikust.pomodorotimer.rest.models.Member;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static co.ikust.pomodorotimer.PomodoroTimerApplication.getRestService;
 
 
 public class TasksActivity extends ActionBarActivity {
@@ -23,18 +24,45 @@ public class TasksActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
 
-        PomodoroTimerApplication.getRestService().getBoards(new Callback<ArrayList<Board>>() {
+        getRestService().getMember(new Callback<Member>() {
             @Override
-            public void success(ArrayList<Board> board, Response response) {
-                Log.d("Config", "Board fetch success");
+            public void success(Member member, Response response) {
+                Log.d("Member", "Member fetch success");
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d("Config", "Board fetch error");
+                Log.d("Member", "Member fetch error");
                 error.printStackTrace();
             }
         });
+
+        getRestService().getBoard("55089da79ebef1e2e6dbf9fe", new Callback<Board>() {
+            @Override
+            public void success(Board board, Response response) {
+                Log.d("Board", "Board fetch success");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Board", "Board fetch error");
+                error.printStackTrace();
+            }
+        });
+
+        getRestService().getList("55089da79ebef1e2e6dbfa00", new Callback<List>() {
+            @Override
+            public void success(List list, Response response) {
+                Log.d("List", "List fetch success");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("List", "List fetch error");
+                error.printStackTrace();
+            }
+        });
+
     }
 
 

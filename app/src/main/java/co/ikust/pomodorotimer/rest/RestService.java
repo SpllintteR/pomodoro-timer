@@ -1,9 +1,8 @@
 package co.ikust.pomodorotimer.rest;
 
-import java.util.ArrayList;
-
 import co.ikust.pomodorotimer.rest.models.Board;
 import co.ikust.pomodorotimer.rest.models.List;
+import co.ikust.pomodorotimer.rest.models.Member;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -13,10 +12,15 @@ import retrofit.http.Path;
  */
 public interface RestService {
 
+    @GET("/1/members/me?fields=fullName&boards=all&board_fields=name")
+    void getMember(
+            Callback<Member> memberCallback
+    );
 
-    @GET("/1/members/me/boards?fields=id,name&lists=all&list_fields=name")
-    void getBoards(
-            Callback<ArrayList<Board>> callback
+    @GET("/1/boards/{id}?fields=id,name&lists=all&list_fields=name")
+    void getBoard(
+            @Path("id") String boardId,
+            Callback<Board> callback
     );
 
     @GET("/1/lists/{id}?fields=name&cards=open&card_fields=name")
