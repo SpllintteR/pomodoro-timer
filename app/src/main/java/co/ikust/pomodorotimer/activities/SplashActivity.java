@@ -1,16 +1,21 @@
 package co.ikust.pomodorotimer.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import co.ikust.pomodorotimer.PomodoroTimerApplication;
 import co.ikust.pomodorotimer.R;
-import co.ikust.pomodorotimer.rest.TrelloConstants;
-import co.ikust.pomodorotimer.trello.Trello;
-import co.ikust.pomodorotimer.trello.TrelloDialog;
-import co.ikust.pomodorotimer.trello.TrelloError;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import co.ikust.pomodorotimer.rest.models.Board;
+import co.ikust.pomodorotimer.rest.oauth.TokenManager;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import static co.ikust.pomodorotimer.PomodoroTimerApplication.hasAccessToken;
 
 /**
  * Created by ivan on 18/03/15.
@@ -22,31 +27,44 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
-                TrelloConstants.APP_KEY,
-                TrelloConstants.APP_SECRET
-        );
+        if(hasAccessToken()) {
+            //TODO: sync with Trello
 
-        TrelloDialog trelloDialog = new TrelloDialog(this, consumer, "", new Trello.DialogListener() {
-            @Override
-            public void onComplete(String accessKey, String accessSecret) {
-                Log.d("TrelloDialog", "AccessKey: " + accessKey);
-                Log.d("TrelloDialog", "AccessSecret: " + accessSecret);
-            }
+            Intent intent = new Intent(this, TasksActivity.class);
+            startActivity(intent);
+        } else {
+//            Intent intent = new Intent(this, ConfigActivity.class);
+//            startActivity(intent);
 
-            @Override
-            public void onError(TrelloError error) {
-                Log.d("TrelloDialog", "onError()");
-                error.printStackTrace();
-            }
+            PomodoroTimerApplication.refreshAccessToken(this, new TokenManager.RefreshTokenCallback() {
+                @Override
+                public void onComplete() {
+                    PomodoroTimerApplication.getRestService().getBoards(new Callback<ArrayList<Board>>() {
+                        @Override
+                        public void success(ArrayList<Board> board, Response response) {
+                            Log.d("Config", "Board fetch success");
+                        }
 
-            @Override
-            public void onCancel() {
-                Log.d("TrelloDialog", "onCancel()");
-            }
-        });
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("Config", "Board fetch error");
+                            error.printStackTrace();
+                        }
+                    });
+                }
 
-        trelloDialog.show();
+                @Override
+                public void onError(Throwable error) {
+                    Log.d("Refresh", "onError");
+                    error.printStackTrace();
+                }
+
+                @Override
+                public void onCancel() {
+                    Log.d("Refresh", "onCancel");
+                }
+            });
+        }
 
     }
 }

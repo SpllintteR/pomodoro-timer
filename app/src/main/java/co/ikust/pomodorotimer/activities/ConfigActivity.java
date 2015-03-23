@@ -48,6 +48,7 @@ public class ConfigActivity extends PreferenceActivity {
         super.onPostCreate(savedInstanceState);
 
         setupSimplePreferencesScreen();
+
     }
 
     /**

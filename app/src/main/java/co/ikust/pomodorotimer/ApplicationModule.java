@@ -1,6 +1,7 @@
 package co.ikust.pomodorotimer;
 
 import co.ikust.pomodorotimer.rest.RestService;
+import co.ikust.pomodorotimer.rest.TrelloRequestInterceptor;
 import co.ikust.pomodorotimer.rest.oauth.TokenManager;
 import co.ikust.pomodorotimer.rest.oauth.TrelloTokenManager;
 import dagger.Module;
@@ -22,6 +23,8 @@ public class ApplicationModule {
     public RestService provideRestService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getInstance().getString(R.string.rest_api_endpoint))
+                .setRequestInterceptor(new TrelloRequestInterceptor())
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog(getInstance().getString(R.string.network_log_tag)))
                 .build();
 

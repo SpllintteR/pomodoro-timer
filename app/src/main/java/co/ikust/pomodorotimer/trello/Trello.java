@@ -11,13 +11,14 @@ package co.ikust.pomodorotimer.trello;
 public class Trello {
 
     public static final String TAG = "Trello";
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     public static final String REQUEST_TOKEN = "https://trello.com/1/OAuthGetRequestToken";
     public static final String ACCESS_TOKEN = "https://trello.com/1/OAuthGetAccessToken";
     public static final String AUTHORIZE = "https://trello.com/1/OAuthAuthorizeToken";
     public static final String DENIED = "denied";
-    public static final String CALLBACK_URI = "callback";
+    public static final String CALLBACK_URI = "trellocall";
+    public static final String FULL_CALLBACK_URI = "/" + CALLBACK_URI;
 
     public static final String EXTRA_ERROR = "error";
     public static final String EXTRA_CONSUMER = "consumer";

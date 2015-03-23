@@ -1,11 +1,15 @@
 package co.ikust.pomodorotimer.rest.oauth;
 
-import oauth.signpost.OAuthConsumer;
+import android.content.Context;
 
 /**
  * Created by ivan on 20/03/15.
  */
 public interface TokenManager {
+
+    final static String KEY_TOKEN = "token";
+
+    final static String KEY_TOKEN_SECRET = "token_secret";
 
     public interface RefreshTokenCallback {
         /**
@@ -28,9 +32,13 @@ public interface TokenManager {
         public void onCancel();
     }
 
-    void refreshToken(RefreshTokenCallback callback);
+    void refreshToken(Context activityContext, RefreshTokenCallback callback);
 
     boolean hasToken();
 
-    OAuthConsumer getToken();
+    String getToken();
+
+    String getTokenSecret();
+
+
 }

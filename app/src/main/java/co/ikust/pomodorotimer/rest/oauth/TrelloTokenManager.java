@@ -1,94 +1,81 @@
 package co.ikust.pomodorotimer.rest.oauth;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.text.InputType;
+import android.widget.EditText;
+
 import co.ikust.pomodorotimer.rest.TrelloConstants;
-import co.ikust.pomodorotimer.trello.Trello;
-import co.ikust.pomodorotimer.trello.TrelloDialog;
-import co.ikust.pomodorotimer.trello.TrelloError;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.getInstance;
 
 /**
- * OAuth {@link co.ikust.pomodorotimer.rest.oauth.TokenManager} for Trello.
- * <p>
- * Manages refreshing and storing access token key and secret.
+ * Created by ivan on 23/03/15.
  */
 public class TrelloTokenManager implements TokenManager {
 
-    protected final static String KEY_TOKEN = "token";
-
-    protected final static String KEY_TOKEN_SECRET = "token_secret";
-
-    protected static OAuthConsumer createConsumer() {
-        return new CommonsHttpOAuthConsumer(
-                TrelloConstants.APP_KEY,
-                TrelloConstants.APP_SECRET
-        );
-    }
-
-    protected static void storeAccessToken(OAuthConsumer consumer) {
+    protected static void storeAccessToken(String token) {
         getDefaultSharedPreferences(getInstance())
                 .edit()
-                .putString(KEY_TOKEN, consumer.getToken())
-                .putString(KEY_TOKEN_SECRET, consumer.getTokenSecret())
+                .putString(KEY_TOKEN, token)
                 .commit();
     }
 
-    protected static OAuthConsumer loadAccessToken() {
-        OAuthConsumer consumer = createConsumer();
-        consumer.setTokenWithSecret(
-                getDefaultSharedPreferences(getInstance()).getString(KEY_TOKEN, null),
-                getDefaultSharedPreferences(getInstance()).getString(KEY_TOKEN_SECRET, null)
-        );
-
-        return consumer;
+    protected static String loadToken() {
+        return getDefaultSharedPreferences(getInstance()).getString(KEY_TOKEN, null);
     }
 
     @Override
-    public void refreshToken(final RefreshTokenCallback callback) {
-        final OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
-                TrelloConstants.APP_KEY,
-                TrelloConstants.APP_SECRET
-        );
+    public void refreshToken(Context activityContext, final RefreshTokenCallback callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activityContext);
+        builder.setTitle("Please input Trello token");
 
-        TrelloDialog trelloDialog = new TrelloDialog(getInstance(), consumer, "", new Trello.DialogListener() {
+        // Set up the input
+        final EditText input = new EditText(activityContext);
+        input.setText("5f2ef7135ff5d33603f9514c82de2ae560e679aa3280c82741481be3735ddc1c");
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onComplete(String accessKey, String accessSecret) {
-                storeAccessToken(consumer); //Store new access token.
+            public void onClick(DialogInterface dialog, int which) {
+                storeAccessToken(input.getText().toString());
 
-                if (callback != null) {
+                if(callback != null) {
                     callback.onComplete();
                 }
             }
-
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onError(TrelloError error) {
-                if (callback != null) {
-                    callback.onError(error);
-                }
-            }
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
 
-            @Override
-            public void onCancel() {
-                if (callback != null) {
+                if(callback != null) {
                     callback.onCancel();
                 }
             }
         });
 
-        trelloDialog.show();
+        builder.show();
     }
 
     @Override
     public boolean hasToken() {
-        return getDefaultSharedPreferences(getInstance()).contains(KEY_TOKEN) &&
-                getDefaultSharedPreferences(getInstance()).contains(KEY_TOKEN_SECRET);
+        return getDefaultSharedPreferences(getInstance()).contains(KEY_TOKEN);
     }
 
     @Override
-    public OAuthConsumer getToken() {
-        return loadAccessToken();
+    public String getToken() {
+        return loadToken();
+    }
+
+    @Override
+    public String getTokenSecret() {
+        return TrelloConstants.APP_KEY;
     }
 }

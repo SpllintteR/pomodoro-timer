@@ -1,6 +1,7 @@
 package co.ikust.pomodorotimer;
 
 import android.app.Application;
+import android.content.Context;
 
 import javax.inject.Inject;
 
@@ -78,11 +79,29 @@ public class PomodoroTimerApplication extends Application {
     }
 
     /**
+     * Returns stored access token or null if there is no stored token.
+     *
+     * @return stored access token or null
+     */
+    public static String getAccessToken() {
+        return instance.tokenManager.getToken();
+    }
+
+    /**
+     * Returns stored access token secret or null if there is no stored token.
+     *
+     * @return stored access token secret or null
+     */
+    public static String getAccessTokenSecret() {
+        return instance.tokenManager.getTokenSecret();
+    }
+
+    /**
      * Updates the OAuth token. Notifies success or failure through callback.
      * RestService is rebuilt after successfull token refresh.
      */
-    public static void refreshAccessToken(final TokenManager.RefreshTokenCallback callback) { //TODO replace with token callback
-        instance.tokenManager.refreshToken(new TokenManager.RefreshTokenCallback() {
+    public static void refreshAccessToken(Context activityContext, final TokenManager.RefreshTokenCallback callback) { //TODO replace with token callback
+        instance.tokenManager.refreshToken(activityContext, new TokenManager.RefreshTokenCallback() {
             @Override
             public void onComplete() {
                 //Re-inject dependencies to trigger constructing new RestService which uses

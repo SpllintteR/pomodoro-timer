@@ -216,6 +216,7 @@ public class TrelloDialog extends Dialog {
                     bundle.putString(KEY_ACCESS_TOKEN, mConsumer.getToken());
                     bundle.putString(KEY_ACCESS_SECRET, mConsumer.getTokenSecret());
                 } catch (OAuthException e)  {
+                    e.printStackTrace();
                     msg.what = ERROR;
                     bundle.putSerializable(KEY_ERROR, e);
                 }
@@ -233,10 +234,8 @@ public class TrelloDialog extends Dialog {
             if (DEBUG) Log.d(TAG, url);
             Uri uri = Uri.parse(url);
 
-            Log.d("Path", uri.getPath());
-
-            //For some reason trello redirects to https://trelloc.com/#{CALLBACK_URI}.
-            if (uri != null && uri.getPath().endsWith(Trello.CALLBACK_URI)) {
+            //For some reason trello redirects to https://trello.com/#{CALLBACK_URI}.
+            if (uri != null && uri.getPath().equals(Trello.FULL_CALLBACK_URI)) {
                 String denied = uri.getQueryParameter(Trello.DENIED);
 
                 if (denied != null) {
