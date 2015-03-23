@@ -10,4 +10,7 @@
     <string name="title_activity_activity_timer">ActivityTimer</string>
     <string name="rest_api_endpoint" translatable="false">https://trello.com</string>
     <string name="network_log_tag">NETWORK</string>
+
+    <string name="pomodoro_count_format" formatted="false" translatable="false">%dx</string>
+    <string name="time_format" formatted="false" translatable="false">%02dh:%02d:%02d</string>
 </resources>
