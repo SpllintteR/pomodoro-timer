@@ -159,7 +159,7 @@ public class ConfigActivity extends PreferenceActivity {
                             preference.getContext(), Uri.parse(stringValue));
 
                     if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
+                        // Clear the summary if there was a lookup onError.
                         preference.setSummary(null);
                     } else {
                         // Set the summary to reflect the new ringtone display

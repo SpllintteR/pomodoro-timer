@@ -1,15 +1,26 @@
 package co.ikust.pomodorotimer.activities;
 
+import com.viewpagerindicator.TabPageIndicator;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import co.ikust.pomodorotimer.R;
+import co.ikust.pomodorotimer.adapters.ViewPagerAdapter;
+import co.ikust.pomodorotimer.fragments.TaskListFragment;
 import co.ikust.pomodorotimer.rest.models.Board;
 import co.ikust.pomodorotimer.rest.models.List;
 import co.ikust.pomodorotimer.rest.models.Member;
+import co.ikust.pomodorotimer.storage.models.TaskTime;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -17,12 +28,32 @@ import retrofit.client.Response;
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.getRestService;
 
 
-public class TasksActivity extends ActionBarActivity {
+public class TasksActivity extends ActionBarActivity implements TaskListFragment.TaskListCallbacks {
+
+    @InjectView(R.id.progressBar)
+    ProgressBar progressBar;
+
+    @InjectView(R.id.tpiIndicator)
+    TabPageIndicator viewPagerIndicator;
+
+    @InjectView(R.id.vpContent)
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
+
+        ButterKnife.inject(this);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        adapter.addItem(TaskListFragment.newInstance(""), getString(R.string.todo_list));
+        adapter.addItem(TaskListFragment.newInstance(""), getString(R.string.doing_list));
+        adapter.addItem(TaskListFragment.newInstance(""), getString(R.string.done_list));
+
+        viewPager.setAdapter(adapter);
+        viewPagerIndicator.setViewPager(viewPager);
 
         getRestService().getMember(new Callback<Member>() {
             @Override
@@ -32,7 +63,7 @@ public class TasksActivity extends ActionBarActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d("Member", "Member fetch error");
+                Log.d("Member", "Member fetch onError");
                 error.printStackTrace();
             }
         });
@@ -45,7 +76,7 @@ public class TasksActivity extends ActionBarActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d("Board", "Board fetch error");
+                Log.d("Board", "Board fetch onError");
                 error.printStackTrace();
             }
         });
@@ -58,7 +89,7 @@ public class TasksActivity extends ActionBarActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d("List", "List fetch error");
+                Log.d("List", "List fetch onError");
                 error.printStackTrace();
             }
         });
@@ -87,4 +118,23 @@ public class TasksActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //region TaskListCallbacks implementation
+    @Override
+    public void showLoading(boolean loading) {
+        if(loading) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void startTimer(TaskTime task) {
+        //TODO move card to doing list
+
+        Intent intent = new Intent(this, TimerActivity.class);
+        startActivity(intent);
+    }
+    //endregion
 }

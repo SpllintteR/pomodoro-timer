@@ -33,7 +33,7 @@
 
         </activity>
         <activity
-            android:name=".activities.ActivityTimer"
+            android:name=".activities.TimerActivity"
             android:label="@string/title_activity_activity_timer" >
         </activity>
     </application>

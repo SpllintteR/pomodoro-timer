@@ -18,7 +18,7 @@ public interface TokenManager {
         public void onComplete();
 
         /**
-         * Called when a dialog has an error.
+         * Called when a dialog has an onError.
          *
          * Executed by the thread that initiated the dialog.
          */

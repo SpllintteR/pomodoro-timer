@@ -42,7 +42,7 @@ public class TrelloDialog extends Dialog {
     private static final int RETRIEVE_REQUEST_TOKEN = 1;
     private static final int RETRIEVE_ACCESS_TOKEN = 2;
 
-    private static final String KEY_ERROR = "error";
+    private static final String KEY_ERROR = "onError";
     private static final String KEY_URL = "url";
     private static final String KEY_ACCESS_TOKEN = "access_token";
     private static final String KEY_ACCESS_SECRET = "access_secret";

@@ -15,6 +15,11 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
+repositories {
+    flatDir {
+        dirs 'libs/aars'
+    }
+}
 
 android {
     compileSdkVersion 21
@@ -52,7 +57,7 @@ dependencies {
     compile 'oauth.signpost:signpost-commonshttp4:1.2.1'
 
     compile 'com.jakewharton:butterknife:6.1.0'
-    compile('com.viewpagerindicator:library:2.4.1') {
+    compile('com.viewpagerindicator:viewpagerindicator:2.4.1@aar') {
         exclude module: 'support-v4'
     }
 

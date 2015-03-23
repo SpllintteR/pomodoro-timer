@@ -13,4 +13,12 @@
 
     <string name="pomodoro_count_format" formatted="false" translatable="false">%dx</string>
     <string name="time_format" formatted="false" translatable="false">%02dh:%02d:%02d</string>
+
+    <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="error">Error</string>
+    <string name="todo_list">To Do</string>
+    <string name="doing_list">Doing</string>
+    <string name="done_list">Done</string>
 </resources>

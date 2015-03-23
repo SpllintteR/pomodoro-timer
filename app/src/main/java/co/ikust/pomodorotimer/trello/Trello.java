@@ -20,7 +20,7 @@ public class Trello {
     public static final String CALLBACK_URI = "trellocall";
     public static final String FULL_CALLBACK_URI = "/" + CALLBACK_URI;
 
-    public static final String EXTRA_ERROR = "error";
+    public static final String EXTRA_ERROR = "onError";
     public static final String EXTRA_CONSUMER = "consumer";
     public static final String EXTRA_AUTHORIZE_PARAMS = "params";
     public static final String EXTRA_ACCESS_KEY = "access_key";
@@ -48,7 +48,7 @@ public class Trello {
         public void onComplete(String accessKey, String accessSecret);
 
         /**
-         * Called when a dialog has an error.
+         * Called when a dialog has an onError.
          *
          * Executed by the thread that initiated the dialog.
          */

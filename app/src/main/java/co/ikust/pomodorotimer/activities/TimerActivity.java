@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import co.ikust.pomodorotimer.R;
 
-public class ActivityTimer extends ActionBarActivity {
+public class TimerActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
