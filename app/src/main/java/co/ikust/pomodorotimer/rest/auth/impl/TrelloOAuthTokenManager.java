@@ -1,8 +1,9 @@
-package co.ikust.pomodorotimer.rest.oauth;
+package co.ikust.pomodorotimer.rest.auth.impl;
 
 import android.content.Context;
 
 import co.ikust.pomodorotimer.rest.TrelloConstants;
+import co.ikust.pomodorotimer.rest.auth.TokenManager;
 import co.ikust.pomodorotimer.trello.Trello;
 import co.ikust.pomodorotimer.trello.TrelloDialog;
 import co.ikust.pomodorotimer.trello.TrelloError;
@@ -13,7 +14,7 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.getInstance;
 
 /**
- * OAuth {@link co.ikust.pomodorotimer.rest.oauth.TokenManager} for Trello.
+ * OAuth {@link co.ikust.pomodorotimer.rest.auth.TokenManager} for Trello.
  * <p>
  * Manages refreshing and storing access token key and secret.
  */

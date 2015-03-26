@@ -2,8 +2,8 @@ package co.ikust.pomodorotimer;
 
 import co.ikust.pomodorotimer.rest.RestService;
 import co.ikust.pomodorotimer.rest.TrelloRequestInterceptor;
-import co.ikust.pomodorotimer.rest.oauth.TokenManager;
-import co.ikust.pomodorotimer.rest.oauth.TrelloTokenManager;
+import co.ikust.pomodorotimer.rest.auth.TokenManager;
+import co.ikust.pomodorotimer.rest.auth.impl.TrelloTokenManager;
 import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;

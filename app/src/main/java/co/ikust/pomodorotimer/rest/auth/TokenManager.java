@@ -1,4 +1,4 @@
-package co.ikust.pomodorotimer.rest.oauth;
+package co.ikust.pomodorotimer.rest.auth;
 
 import android.content.Context;
 

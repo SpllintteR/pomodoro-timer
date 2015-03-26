@@ -1,4 +1,4 @@
-package co.ikust.pomodorotimer.rest.oauth;
+package co.ikust.pomodorotimer.rest.auth.impl;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.widget.EditText;
 
 import co.ikust.pomodorotimer.rest.TrelloConstants;
+import co.ikust.pomodorotimer.rest.auth.TokenManager;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.getInstance;

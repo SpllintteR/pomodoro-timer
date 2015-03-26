@@ -6,7 +6,7 @@ import android.content.Context;
 import javax.inject.Inject;
 
 import co.ikust.pomodorotimer.rest.RestService;
-import co.ikust.pomodorotimer.rest.oauth.TokenManager;
+import co.ikust.pomodorotimer.rest.auth.TokenManager;
 import dagger.ObjectGraph;
 
 /**
