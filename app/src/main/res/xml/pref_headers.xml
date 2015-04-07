@@ -5,10 +5,7 @@
     <header android:fragment="co.ikust.pomodorotimer.activities.ConfigActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
 
-    <header android:fragment="co.ikust.pomodorotimer.activities.ConfigActivity$NotificationPreferenceFragment"
-        android:title="@string/pref_header_notifications" />
-
-    <header android:fragment="co.ikust.pomodorotimer.activities.ConfigActivity$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" />
+    <header android:fragment="co.ikust.pomodorotimer.activities.ConfigActivity$ListsPreferenceFragment"
+        android:title="@string/pref_header_lists" />
 
 </preference-headers>

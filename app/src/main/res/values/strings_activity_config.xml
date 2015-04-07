@@ -5,10 +5,27 @@
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
+    <string name="pref_header_lists">Lists</string>
 
-    <string name="pref_title_member">Link Trello user</string>
+    <string name="pref_title_member">Trello user</string>
     <string name="pref_member">member_id</string>
     <string name="pref_description_member">Click to link Trello user with the app</string>
+
+    <string name="pref_title_board">Board</string>
+    <string name="pref_board">board_id</string>
+    <string name="pref_description_board">Click to set Trello board to use</string>
+
+    <string name="pref_title_todo_list">ToDo List</string>
+    <string name="pref_todo_list">todo_list_id</string>
+    <string name="pref_description_todo_list">Click to associate ToDo list from Board</string>
+
+    <string name="pref_title_doing_list">DoingList</string>
+    <string name="pref_doing_list">doing_list_id</string>
+    <string name="pref_description_doing_list">Click to associate Doing list from Board</string>
+
+    <string name="pref_title_done_list">ToDo List</string>
+    <string name="pref_done_list">todo_list_id</string>
+    <string name="pref_description_done_list">Click to associate Done list from Board</string>
 
     <string name="pref_title_social_recommendations">Enable social recommendations</string>
     <string name="pref_description_social_recommendations">Recommendations for people to contact based on your message history</string>

@@ -1,8 +1,15 @@
 package co.ikust.pomodorotimer.preferences;
 
+import android.content.Context;
+import android.preference.DialogPreference;
+import android.util.AttributeSet;
+
 /**
  * Created by ivan on 06/04/15.
  */
-public class TrelloListPreference {
+public class TrelloListPreference extends DialogPreference {
 
+    public TrelloListPreference(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 }
