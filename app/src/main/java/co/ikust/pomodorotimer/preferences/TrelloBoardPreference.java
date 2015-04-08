@@ -36,7 +36,7 @@ public class TrelloBoardPreference extends DialogPreference implements Preferenc
             }
 
             persistString(board.getId());
-            getLocalData().setBoard(board);
+            getLocalData().addBoard(board);
 
             setSummary(board.getName());
 

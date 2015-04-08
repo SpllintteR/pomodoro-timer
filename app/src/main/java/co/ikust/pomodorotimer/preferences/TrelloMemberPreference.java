@@ -59,7 +59,7 @@ public class TrelloMemberPreference extends Preference implements PreferenceMana
             }
 
             persistString(member.getId());
-            getLocalData().setMember(member);
+            getLocalData().addMember(member);
 
             setSummary(member.getFullName());
 
