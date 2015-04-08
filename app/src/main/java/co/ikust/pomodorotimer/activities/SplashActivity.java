@@ -19,7 +19,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         if(hasAccessToken()) {
-            //TODO: sync with Trello
+            //TODO: sync with Trello -> load current user data, boards and lists
 
             Intent intent = new Intent(this, TasksActivity.class);
             startActivity(intent);

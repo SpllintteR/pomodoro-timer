@@ -10,7 +10,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 import java.util.List;
 
@@ -123,11 +122,11 @@ public class ConfigActivity extends PreferenceActivity {
             = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
-
-            if(!TextUtils.isEmpty(stringValue)) {
-                preference.setSummary(stringValue);
-            }
+//            String stringValue = value.toString();
+//
+//            if(!TextUtils.isEmpty(stringValue)) {
+//                preference.setSummary(stringValue);
+//            }
 
 //            if (preference instanceof ListPreference) {
 //                // For list preferences, look up the correct display value in

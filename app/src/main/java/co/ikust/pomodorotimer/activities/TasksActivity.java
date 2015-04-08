@@ -113,6 +113,8 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, ConfigActivity.class);
+            startActivity(intent);
             return true;
         }
 

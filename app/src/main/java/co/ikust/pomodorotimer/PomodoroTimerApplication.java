@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import co.ikust.pomodorotimer.rest.RestService;
 import co.ikust.pomodorotimer.rest.auth.TokenManager;
+import co.ikust.pomodorotimer.storage.LocalData;
 import dagger.ObjectGraph;
 
 /**
@@ -26,6 +27,9 @@ public class PomodoroTimerApplication extends Application {
 
     @Inject
     RestService apiService;
+
+    @Inject
+    LocalData localData;
 
     @Inject
     TokenManager tokenManager;
@@ -67,6 +71,15 @@ public class PomodoroTimerApplication extends Application {
      */
     public static RestService getRestService() {
         return instance.apiService;
+    }
+
+    /**
+     * Returns the implementation of {@link co.ikust.pomodorotimer.storage.LocalData}.
+     *
+     * @return Local storage implementation for caching application data
+     */
+    public static LocalData getLocalData() {
+        return instance.localData;
     }
 
     /**

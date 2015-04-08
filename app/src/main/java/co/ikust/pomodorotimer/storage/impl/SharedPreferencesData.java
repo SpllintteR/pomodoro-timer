@@ -3,9 +3,8 @@ package co.ikust.pomodorotimer.storage.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import java.util.List;
-
 import co.ikust.pomodorotimer.rest.models.Board;
+import co.ikust.pomodorotimer.rest.models.List;
 import co.ikust.pomodorotimer.rest.models.Member;
 import co.ikust.pomodorotimer.storage.LocalData;
 import co.ikust.pomodorotimer.storage.models.TaskTime;
@@ -54,7 +53,7 @@ public class SharedPreferencesData implements LocalData {
     }
 
     @Override
-    public List<TaskTime> getTrackedTaskTimes() {
+    public java.util.List<TaskTime> getTrackedTaskTimes() {
         return null;
     }
 
@@ -89,8 +88,13 @@ public class SharedPreferencesData implements LocalData {
     }
 
     @Override
-    public void setToDoList(List list) {
+    public void addList(List list) {
 
+    }
+
+    @Override
+    public List getList(String listId) {
+        return null;
     }
 
     @Override
@@ -99,18 +103,8 @@ public class SharedPreferencesData implements LocalData {
     }
 
     @Override
-    public void setDoingList(List list) {
-
-    }
-
-    @Override
     public List getDoingList() {
         return null;
-    }
-
-    @Override
-    public void setDoneList(List list) {
-
     }
 
     @Override

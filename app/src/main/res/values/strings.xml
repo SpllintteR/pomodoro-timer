@@ -17,6 +17,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="error">Error</string>
+    <string name="authorization_error">Authorization error</string>
     <string name="todo_list">To Do</string>
     <string name="doing_list">Doing</string>
     <string name="done_list">Done</string>

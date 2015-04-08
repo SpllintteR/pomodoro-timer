@@ -4,6 +4,8 @@ import co.ikust.pomodorotimer.rest.RestService;
 import co.ikust.pomodorotimer.rest.TrelloRequestInterceptor;
 import co.ikust.pomodorotimer.rest.auth.TokenManager;
 import co.ikust.pomodorotimer.rest.auth.impl.TrelloTokenManager;
+import co.ikust.pomodorotimer.storage.LocalData;
+import co.ikust.pomodorotimer.storage.impl.SharedPreferencesData;
 import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
@@ -29,6 +31,11 @@ public class ApplicationModule {
                 .build();
 
         return restAdapter.create(RestService.class);
+    }
+
+    @Provides
+    public LocalData provideLocalData() {
+        return new SharedPreferencesData();
     }
 
     @Provides
