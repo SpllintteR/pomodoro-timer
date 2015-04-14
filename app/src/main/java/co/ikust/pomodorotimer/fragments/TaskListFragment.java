@@ -21,7 +21,7 @@ import co.ikust.pomodorotimer.adapters.TaskAdapter;
 import co.ikust.pomodorotimer.mvp.modules.TaskListModule;
 import co.ikust.pomodorotimer.mvp.presenters.TaskListPresenter;
 import co.ikust.pomodorotimer.mvp.views.TaskListView;
-import co.ikust.pomodorotimer.storage.models.TaskTime;
+import co.ikust.pomodorotimer.rest.models.Card;
 import dagger.ObjectGraph;
 
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.getInstance;
@@ -36,7 +36,7 @@ public class TaskListFragment extends Fragment implements TaskListView {
     public interface TaskListCallbacks {
         void showLoading(boolean loading);
 
-        void startTimer(TaskTime task);
+        void startTimer(Card task);
     }
 
     public static final String LIST_ID_PARAM = "list_id";
@@ -80,7 +80,7 @@ public class TaskListFragment extends Fragment implements TaskListView {
 
         ButterKnife.inject(this, rootView);
 
-        adapter = new TaskAdapter(getActivity(), new ArrayList<TaskTime>());
+        adapter = new TaskAdapter(getActivity(), new ArrayList<Card>());
         listView.setAdapter(adapter);
 
         injectLocalGraph();
@@ -119,7 +119,7 @@ public class TaskListFragment extends Fragment implements TaskListView {
 
     //region TaskListView implementation
     @Override
-    public void addItems(ArrayList<TaskTime> items) {
+    public void addItems(ArrayList<Card> items) {
         adapter.addAll(items);
     }
 
@@ -129,7 +129,7 @@ public class TaskListFragment extends Fragment implements TaskListView {
     }
 
     @Override
-    public void onItemClicked(TaskTime task) {
+    public void onItemClicked(Card task) {
         callbacks.startTimer(task);
     }
 

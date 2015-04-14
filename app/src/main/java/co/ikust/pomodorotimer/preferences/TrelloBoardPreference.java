@@ -72,7 +72,11 @@ public class TrelloBoardPreference extends DialogPreference implements Preferenc
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        super.onSetInitialValue(restorePersistedValue, defaultValue);
+        if(restorePersistedValue) {
+            setSummary(getLocalData().getBoard().getName());
+        } else {
+            setSummary(getContext().getString(R.string.pref_description_board));
+        }
     }
 
     private String[] boardsToStringArray(ArrayList<Board> boardList) {

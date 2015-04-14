@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +16,9 @@ import butterknife.InjectView;
 import co.ikust.pomodorotimer.R;
 import co.ikust.pomodorotimer.adapters.ViewPagerAdapter;
 import co.ikust.pomodorotimer.fragments.TaskListFragment;
-import co.ikust.pomodorotimer.rest.models.Board;
-import co.ikust.pomodorotimer.rest.models.List;
-import co.ikust.pomodorotimer.rest.models.Member;
-import co.ikust.pomodorotimer.storage.models.TaskTime;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import co.ikust.pomodorotimer.rest.models.Card;
 
-import static co.ikust.pomodorotimer.PomodoroTimerApplication.getRestService;
+import static co.ikust.pomodorotimer.PomodoroTimerApplication.hasAccessToken;
 
 
 public class TasksActivity extends ActionBarActivity implements TaskListFragment.TaskListCallbacks {
@@ -55,45 +48,9 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
         viewPager.setAdapter(adapter);
         viewPagerIndicator.setViewPager(viewPager);
 
-        getRestService().getMember(new Callback<Member>() {
-            @Override
-            public void success(Member member, Response response) {
-                Log.d("Member", "Member fetch success");
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Member", "Member fetch onError");
-                error.printStackTrace();
-            }
-        });
-
-        getRestService().getBoard("55089da79ebef1e2e6dbf9fe", new Callback<Board>() {
-            @Override
-            public void success(Board board, Response response) {
-                Log.d("Board", "Board fetch success");
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Board", "Board fetch onError");
-                error.printStackTrace();
-            }
-        });
-
-        getRestService().getList("55089da79ebef1e2e6dbfa00", new Callback<List>() {
-            @Override
-            public void success(List list, Response response) {
-                Log.d("List", "List fetch success");
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("List", "List fetch onError");
-                error.printStackTrace();
-            }
-        });
-
+        if(!hasAccessToken()) {
+            showSettings();
+        }
     }
 
 
@@ -113,12 +70,16 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, ConfigActivity.class);
-            startActivity(intent);
+            showSettings();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSettings() {
+        Intent intent = new Intent(this, ConfigActivity.class);
+        startActivity(intent);
     }
 
     //region TaskListCallbacks implementation
@@ -132,7 +93,7 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
     }
 
     @Override
-    public void startTimer(TaskTime task) {
+    public void startTimer(Card task) {
         //TODO move card to doing list
 
         Intent intent = new Intent(this, TimerActivity.class);

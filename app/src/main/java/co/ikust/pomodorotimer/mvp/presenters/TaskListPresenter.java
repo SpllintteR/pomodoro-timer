@@ -2,7 +2,7 @@ package co.ikust.pomodorotimer.mvp.presenters;
 
 import java.util.HashMap;
 
-import co.ikust.pomodorotimer.storage.models.TaskTime;
+import co.ikust.pomodorotimer.rest.models.Card;
 
 /**
  * Created by ivan on 23/03/15.
@@ -18,6 +18,6 @@ public interface TaskListPresenter {
      *
      * @param task
      */
-    void onItemClicked(TaskTime task);
+    void onItemClicked(Card task);
 
 }

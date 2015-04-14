@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.ikust.pomodorotimer.R;
-import co.ikust.pomodorotimer.storage.models.TaskTime;
+import co.ikust.pomodorotimer.rest.models.Card;
 import co.ikust.pomodorotimer.utils.FormatUtils;
 
 /**
  * Created by ivan on 23/03/15.
  */
-public class TaskAdapter extends ArrayAdapter<TaskTime> {
+public class TaskAdapter extends ArrayAdapter<Card> {
 
     static class ViewHolder {
         @InjectView(R.id.tvTaskName)
@@ -34,17 +34,17 @@ public class TaskAdapter extends ArrayAdapter<TaskTime> {
             ButterKnife.inject(this, view);
         }
 
-        public void prepareView(TaskTime item) {
-            taskNameTextView.setText(item.getCard().getName());
+        public void prepareView(Card item) {
+            taskNameTextView.setText(item.getName());
             pomodoroCountTextView.setText(String.format(
                     pomodoroCountTextView.getContext().getString(R.string.pomodoro_count_format),
-                    item.getPomodoroCount()
+                    0 //TODO get pomodoro count
             ));
-            totalTimeTextView.setText(FormatUtils.formatTime(item.getTime()));
+            totalTimeTextView.setText(FormatUtils.formatTime(0)); //TODO get task time
         }
     }
 
-    public TaskAdapter(Context context, ArrayList<TaskTime> tasks) {
+    public TaskAdapter(Context context, ArrayList<Card> tasks) {
         super(context, 0, tasks);
     }
 

@@ -2,6 +2,7 @@ package co.ikust.pomodorotimer.mvp.interactors.impl;
 
 import java.util.HashMap;
 
+import co.ikust.pomodorotimer.fragments.TaskListFragment;
 import co.ikust.pomodorotimer.mvp.interactors.TaskListInteractor;
 
 /**
@@ -11,6 +12,8 @@ public class TaskListInteractorImpl implements TaskListInteractor {
 
     @Override
     public void loadCachedTasks(HashMap<String, Object> arguments, OnTasksLoaded listener) {
+        String taskListId = (String) arguments.get(TaskListFragment.LIST_ID_PARAM);
+
 
     }
 

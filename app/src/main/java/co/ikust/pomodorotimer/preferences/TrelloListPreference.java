@@ -73,6 +73,16 @@ public class TrelloListPreference extends DialogPreference implements Preference
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         super.onSetInitialValue(restorePersistedValue, defaultValue);
+
+        if(restorePersistedValue) {
+            List list = getLocalData().getList(getPersistedString(null));
+
+            if(list != null) {
+                setSummary(getLocalData().getList(getPersistedString(null)).getName());
+            }
+        } else {
+
+        }
     }
 
     private String[] listsToStringArray(ArrayList<List> listOfLists) {

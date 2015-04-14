@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import co.ikust.pomodorotimer.mvp.interactors.TaskListInteractor;
 import co.ikust.pomodorotimer.mvp.presenters.TaskListPresenter;
 import co.ikust.pomodorotimer.mvp.views.TaskListView;
+import co.ikust.pomodorotimer.rest.models.Card;
 import co.ikust.pomodorotimer.storage.models.TaskTime;
 
 /**
@@ -37,14 +38,14 @@ public class TaskListPresenterImpl implements TaskListPresenter, TaskListInterac
     }
 
     @Override
-    public void onItemClicked(TaskTime task) {
+    public void onItemClicked(Card task) {
         view.onItemClicked(task);
     }
 
 
     //region OnTasksLoaded implementation
     @Override
-    public void onTasksLoaded(ArrayList<TaskTime> tasks) {
+    public void onTasksLoaded(ArrayList<Card> tasks) {
         view.hideLoading();
         view.clear();
         view.addItems(tasks);
