@@ -78,6 +78,7 @@ public class SharedPreferencesData implements LocalData {
         try {
             return gson.fromJson(read(String.format(keyFormat, id), ""), modelClass);
         } catch(JsonSyntaxException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -132,7 +133,7 @@ public class SharedPreferencesData implements LocalData {
 
     @Override
     public void addList(@NonNull List list) {
-        write(String.format(BOARD_KEY_FORMAT, list.getId()), gson.toJson(list));
+        write(String.format(LIST_KEY_FORMAT, list.getId()), gson.toJson(list));
     }
 
     @Override

@@ -9,7 +9,6 @@ import co.ikust.pomodorotimer.mvp.interactors.TaskListInteractor;
 import co.ikust.pomodorotimer.mvp.presenters.TaskListPresenter;
 import co.ikust.pomodorotimer.mvp.views.TaskListView;
 import co.ikust.pomodorotimer.rest.models.Card;
-import co.ikust.pomodorotimer.storage.models.TaskTime;
 
 /**
  * Created by ivan on 23/03/15.

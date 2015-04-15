@@ -1,18 +1,9 @@
 package co.ikust.pomodorotimer.storage.models;
 
-import co.ikust.pomodorotimer.rest.models.Card;
-
 /**
  * Stores total tracked time and Pomodoros for a Trello Card (task).
  */
-public class TaskTime {
-
-    //TODO enum that defines the state of the task ("do to", "doing", "done")
-
-    /**
-     * Trello Card that represents the task time is tracked for.
-     */
-    private Card card;
+public class TrackedTime {
 
     /**
      * Total number of Pomodoros spent on the task.
@@ -23,24 +14,6 @@ public class TaskTime {
      * Total time (including Pomodoros and breaks) in milliseconds.
      */
     private long time;
-
-    /**
-     * Create new TaskTime that will be used to track time for the given {@link co.ikust.pomodorotimer.rest.models.Card}.
-     *
-     * @param card Trello Card that represents task time will be tracked for
-     */
-    public TaskTime(Card card) {
-        this.card = card;
-    }
-
-    /**
-     * Get the associated Trello card.
-     *
-     * @return
-     */
-    public Card getCard() {
-        return card;
-    }
 
     /**
      * Get total spent number of Pomodoros.

@@ -21,5 +21,6 @@
     <string name="todo_list">To Do</string>
     <string name="doing_list">Doing</string>
     <string name="done_list">Done</string>
+    <string name="error_loading_task_list">Task list cannot be loaded from cache.</string>
 
 </resources>

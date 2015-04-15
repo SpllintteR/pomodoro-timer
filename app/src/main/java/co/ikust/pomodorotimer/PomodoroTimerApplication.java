@@ -1,5 +1,7 @@
 package co.ikust.pomodorotimer;
 
+import com.facebook.stetho.Stetho;
+
 import android.app.Application;
 import android.content.Context;
 
@@ -47,6 +49,14 @@ public class PomodoroTimerApplication extends Application {
         super.onCreate();
 
         instance = this;
+
+        if(BuildConfig.DEBUG) {
+            Stetho.initialize(
+                    Stetho.newInitializerBuilder(this)
+                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                            .build());
+        }
 
         injectDependencies();
     }

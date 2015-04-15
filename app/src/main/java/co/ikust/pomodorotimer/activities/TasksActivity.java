@@ -18,6 +18,7 @@ import co.ikust.pomodorotimer.adapters.ViewPagerAdapter;
 import co.ikust.pomodorotimer.fragments.TaskListFragment;
 import co.ikust.pomodorotimer.rest.models.Card;
 
+import static co.ikust.pomodorotimer.PomodoroTimerApplication.getLocalData;
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.hasAccessToken;
 
 
@@ -32,6 +33,8 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
     @InjectView(R.id.vpContent)
     ViewPager viewPager;
 
+    ViewPagerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,20 +42,26 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
 
         ButterKnife.inject(this);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addItem(TaskListFragment.newInstance(""), getString(R.string.todo_list));
-        adapter.addItem(TaskListFragment.newInstance(""), getString(R.string.doing_list));
-        adapter.addItem(TaskListFragment.newInstance(""), getString(R.string.done_list));
-
-        viewPager.setAdapter(adapter);
-        viewPagerIndicator.setViewPager(viewPager);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         if(!hasAccessToken()) {
             showSettings();
+        } else {
+            addTabs();
         }
+
+        viewPager.setAdapter(adapter);
+        viewPagerIndicator.setViewPager(viewPager);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(hasAccessToken() && adapter.getCount() == 0) {
+            addTabs();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,6 +84,13 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addTabs() {
+        adapter.addItem(TaskListFragment.newInstance(getLocalData().getToDoList().getId()), getString(R.string.todo_list));
+        adapter.addItem(TaskListFragment.newInstance(getLocalData().getDoingList().getId()), getString(R.string.doing_list));
+        adapter.addItem(TaskListFragment.newInstance(getLocalData().getDoneList().getId()), getString(R.string.done_list));
+        adapter.notifyDataSetChanged();
     }
 
     private void showSettings() {
