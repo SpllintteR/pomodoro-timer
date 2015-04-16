@@ -10,6 +10,7 @@ import co.ikust.pomodorotimer.rest.models.Board;
 import co.ikust.pomodorotimer.rest.models.List;
 import co.ikust.pomodorotimer.rest.models.Member;
 import co.ikust.pomodorotimer.storage.LocalData;
+import co.ikust.pomodorotimer.storage.models.TimerStatus;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.getInstance;
@@ -43,6 +44,11 @@ public class SharedPreferencesData implements LocalData {
      * SharedPreferences key that holds the id of the done list.
      */
     private static final String KEY_DONE_LIST = getInstance().getString(R.string.pref_done_list);
+
+    /**
+     * SharedPreferences key that holds the Timer status model.
+     */
+    private static final String KEY_TIMER_STATUS = "timer_status";
 
     /**
      * Key format for keys that are used to cache Trello members.
@@ -157,5 +163,15 @@ public class SharedPreferencesData implements LocalData {
     public List getDoneList() {
         String doneListId = read(KEY_DONE_LIST, null);
         return readModel(LIST_KEY_FORMAT, doneListId, List.class);
+    }
+
+    @Override
+    public TimerStatus getTimerStatus() {
+        return readModel(KEY_TIMER_STATUS, null, TimerStatus.class);
+    }
+
+    @Override
+    public void refreshTimerStatus(TimerStatus timerStatus) {
+        write(KEY_TIMER_STATUS, gson.toJson(timerStatus));
     }
 }

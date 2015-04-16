@@ -22,5 +22,10 @@
     <string name="doing_list">Doing</string>
     <string name="done_list">Done</string>
     <string name="error_loading_task_list">Task list cannot be loaded from cache.</string>
+    <string name="time">Time:</string>
+    <string name="pomodoros">Pomodoros:</string>
+    <string name="total_time">Total time:</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
 
 </resources>
