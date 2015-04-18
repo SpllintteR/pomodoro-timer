@@ -9,18 +9,23 @@ public interface TimerPresenter {
 
     void onViewCreated(HashMap<String, Object> arguments);
 
-    void onPauseTimer();
+    void onEnteredForeground(HashMap<String, Object> arguments);
 
-    void onResumeTimer();
+    void onEnteredBackground();
 
-    void onStopTimer();
+    void onStartPomodoro(HashMap<String, Object> arguments);
 
-    void onTaskDone();
+    void onStartShortBreak(HashMap<String, Object> arguments);
 
-    void onStartPomodoro();
+    void onStartLongBreak(HashMap<String, Object> arguments);
 
-    void onStartShortBreak();
+    void onPauseTimer(HashMap<String, Object> arguments);
 
-    void onStartLongBreak();
+    void onResumeTimer(HashMap<String, Object> arguments);
+
+    void onStopTimer(HashMap<String, Object> arguments);
+
+    void onTaskDone(HashMap<String, Object> arguments);
+
 
 }

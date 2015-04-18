@@ -16,17 +16,23 @@ public interface TimerInteractor {
 
     void onViewCreated(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
 
-    void startPomodoroCountDown(OnTimerStatusObtainedListener listener);
+    void registerTickListener(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
 
-    void startShortBreakCountDown(OnTimerStatusObtainedListener listener);
+    void unregisterTickListener();
 
-    void startLongBreakCountDown(OnTimerStatusObtainedListener listener);
+    void showNotifications(boolean show);
 
-    void pause(OnTimerStatusObtainedListener listener);
+    void startPomodoroCountDown(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
 
-    void resume(OnTimerStatusObtainedListener listener);
+    void startShortBreakCountDown(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
 
-    void stop(OnTimerStatusObtainedListener listener);
+    void startLongBreakCountDown(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
 
-    void finishTask(OnTimerStatusObtainedListener listener);
+    void pause(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
+
+    void resume(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
+
+    void stop(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
+
+    void finishTask(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener);
 }

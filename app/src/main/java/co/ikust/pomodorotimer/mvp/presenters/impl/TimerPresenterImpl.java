@@ -55,37 +55,51 @@ public class TimerPresenterImpl implements TimerPresenter, TimerInteractor.OnTim
     }
 
     @Override
-    public void onPauseTimer() {
-        interactor.pause(this);
+    public void onEnteredForeground(HashMap<String, Object> arguments) {
+        interactor.showNotifications(false);
+        interactor.registerTickListener(arguments, this);
     }
 
     @Override
-    public void onResumeTimer() {
-        interactor.resume(this);
+    public void onEnteredBackground() {
+        interactor.showNotifications(true);
+        interactor.unregisterTickListener();
     }
 
     @Override
-    public void onStopTimer() {
-        interactor.stop(this);
+    public void onStartPomodoro(HashMap<String, Object> arguments) {
+        interactor.startPomodoroCountDown(arguments, this);
     }
 
     @Override
-    public void onTaskDone() {
-        interactor.finishTask(this);
+    public void onStartShortBreak(HashMap<String, Object> arguments) {
+        interactor.startShortBreakCountDown(arguments, this);
     }
 
     @Override
-    public void onStartPomodoro() {
-        interactor.startPomodoroCountDown(this);
+    public void onStartLongBreak(HashMap<String, Object> arguments) {
+        interactor.startLongBreakCountDown(arguments, this);
     }
 
     @Override
-    public void onStartShortBreak() {
-        interactor.startShortBreakCountDown(this);
+    public void onPauseTimer(HashMap<String, Object> arguments) {
+        interactor.pause(arguments, this);
     }
 
     @Override
-    public void onStartLongBreak() {
-        interactor.startLongBreakCountDown(this);
+    public void onResumeTimer(HashMap<String, Object> arguments) {
+        interactor.resume(arguments, this);
     }
+
+    @Override
+    public void onStopTimer(HashMap<String, Object> arguments) {
+        interactor.stop(arguments, this);
+    }
+
+    @Override
+    public void onTaskDone(HashMap<String, Object> arguments) {
+        interactor.finishTask(arguments, this);
+    }
+
+
 }

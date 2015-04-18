@@ -22,6 +22,10 @@ import static co.ikust.pomodorotimer.PomodoroTimerApplication.getLocalData;
  */
 public class TimerService extends Service {
 
+    public interface TimerServiceListener {
+        void onTimerStatusChanged(TimerStatus status);
+    }
+
     public static final String ACTION_STARTED = "start";
 
     private static TimerService instance;
@@ -29,6 +33,10 @@ public class TimerService extends Service {
     private ScheduledThreadPoolExecutor executor;
 
     private ScheduledFuture<?> runningTimer;
+
+    private TimerServiceListener listener;
+
+    private boolean showNotifications;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -50,6 +58,8 @@ public class TimerService extends Service {
         return START_STICKY;
     }
 
+
+
     /**
      * Returns the instance of this service once started or <code>null</code>.
      *
@@ -63,19 +73,19 @@ public class TimerService extends Service {
         return getLocalData().getTimerStatus();
     }
 
-    public void registerListener() {
-
+    public void registerListener(TimerServiceListener listener) {
+        this.listener = listener;
     }
 
     public void unregisterListener() {
-
+        this.listener = null;
     }
 
     /**
      * Turns on showing countdown in notifications.
      */
-    public void showNotification(boolean show) {
-
+    public void showNotifications(boolean show) {
+        this.showNotifications = show;
     }
 
     private void stopTaskIfFinished(TimerStatus timerStatus, long taskLength, TimerStatus.State newState) {
