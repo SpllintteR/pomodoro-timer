@@ -19,4 +19,10 @@ public class Constants {
      * Duration of long break period (15 minutes) in milliseconds.
      */
     public static final long LONG_BREAK_TIME = 15 * 60 * 1000;
+
+    /**
+     * Duration of timer "tick" interval (1 second) in milliseconds.
+     */
+    public static final long TIMER_TICK_INTERVAL = 1000;
+
 }

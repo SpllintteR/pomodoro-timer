@@ -29,4 +29,14 @@ public class List {
     public ArrayList<Card> getCards() {
         return cards;
     }
+
+    public Card getCardWithId(String cardId) {
+        for(Card card : cards) {
+            if(card.getId().equals(cardId)) {
+                return card;
+            }
+        }
+
+        return null; //No card with the given id.
+    }
 }

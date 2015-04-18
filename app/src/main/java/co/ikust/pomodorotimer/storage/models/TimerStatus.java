@@ -10,14 +10,19 @@ public class TimerStatus {
         POMODORO_FINISHED,
         SHORT_BREAK_COUNTDOWN,
         LONG_BREAK_COUNTDOWN,
-        BREAK_FINISHED
+        BREAK_FINISHED,
+        DONE //Timer is idle
     }
 
     private String taskId;
 
+    private String listId;
+
     private State state;
 
     private boolean paused;
+
+    private long time;
 
 
     public String getTaskId() {
@@ -26,6 +31,14 @@ public class TimerStatus {
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    public String getListId() {
+        return listId;
+    }
+
+    public void setListId(String listId) {
+        this.listId = listId;
     }
 
     public State getState() {
@@ -43,4 +56,17 @@ public class TimerStatus {
     public void setPaused(boolean paused) {
         this.paused = paused;
     }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void addTime(long time) {
+        this.time += time;
+    }
+
+    public void resetTime() {
+        this.time = 0;
+    }
+
 }

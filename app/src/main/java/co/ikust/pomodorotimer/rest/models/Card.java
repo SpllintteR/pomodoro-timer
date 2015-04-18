@@ -9,6 +9,9 @@ import co.ikust.pomodorotimer.storage.models.TrackedTime;
  */
 public class Card {
 
+    @SerializedName("list_id")
+    private String listId;
+
     @SerializedName("id")
     private String id;
 
@@ -21,6 +24,10 @@ public class Card {
     public Card() {
         //Initialize tracked time with default values.
         this.trackedTime = new TrackedTime();
+    }
+
+    public String getListId() {
+        return listId;
     }
 
     public String getId() {
