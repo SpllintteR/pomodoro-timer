@@ -29,12 +29,18 @@ public class TimerPresenterImpl implements TimerPresenter, TimerInteractor.OnTim
     public void onTimerStatusObtained(TimerStatus timerStatus, Card card) {
         view.setTaskTitle(card.getName());
         view.setStatus(timerStatus.getState().name());
+        view.setPomodoroCount(card.getTrackedTime().getPomodoroCount());
+        view.setTotalTime(card.getTrackedTime().getTime());
 
         switch(timerStatus.getState()) {
             case POMODORO_COUNTDOWN:
                 view.setCurrentTime(Constants.POMODORO_TIME - card.getTrackedTime().getTime());
                 break;
 
+            case POMODORO_FINISHED:
+                view.setCurrentTime(0);
+                view.showPomodoroDone();
+                break;
             case SHORT_BREAK_COUNTDOWN:
                 view.setCurrentTime(Constants.SHORT_BREAK_TIME - card.getTrackedTime().getTime());
                 break;
@@ -43,8 +49,14 @@ public class TimerPresenterImpl implements TimerPresenter, TimerInteractor.OnTim
                 view.setCurrentTime(Constants.LONG_BREAK_TIME - card.getTrackedTime().getTime());
                 break;
 
+            case BREAK_FINISHED:
+                view.setCurrentTime(0);
+                view.showBreakDone();
+                break;
+
             default:
                 view.setCurrentTime(0);
+
                 break;
         }
     }

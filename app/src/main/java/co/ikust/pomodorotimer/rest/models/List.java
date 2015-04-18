@@ -39,4 +39,12 @@ public class List {
 
         return null; //No card with the given id.
     }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public boolean removeCard(Card card) {
+        return cards.remove(getCardWithId(card.getId()));
+    };
 }

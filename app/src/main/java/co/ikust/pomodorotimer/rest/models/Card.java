@@ -2,12 +2,14 @@ package co.ikust.pomodorotimer.rest.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import co.ikust.pomodorotimer.storage.models.TrackedTime;
 
 /**
  * REST Model that represents Trello card.
  */
-public class Card {
+public class Card implements Serializable{
 
     @SerializedName("list_id")
     private String listId;

@@ -21,4 +21,6 @@ public interface TimerView {
 
     void showPomodoroDone();
 
+    void showBreakDone();
+
 }

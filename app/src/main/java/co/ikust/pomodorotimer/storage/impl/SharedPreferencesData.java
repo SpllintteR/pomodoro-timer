@@ -167,7 +167,13 @@ public class SharedPreferencesData implements LocalData {
 
     @Override
     public TimerStatus getTimerStatus() {
-        return readModel(KEY_TIMER_STATUS, null, TimerStatus.class);
+        TimerStatus timerStatus = readModel(KEY_TIMER_STATUS, null, TimerStatus.class);
+
+        if(timerStatus == null) {
+            timerStatus = new TimerStatus();
+        }
+
+        return timerStatus;
     }
 
     @Override

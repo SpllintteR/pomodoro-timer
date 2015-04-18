@@ -15,12 +15,16 @@ import co.ikust.pomodorotimer.utils.TimerServiceUtils;
 public class TimerInteractorImpl implements TimerInteractor {
 
     @Override
-    public void onViewCreated(HashMap<String, Object> arguments, final OnTimerStatusObtainedListener listener) {
+    public void onViewCreated(final HashMap<String, Object> arguments, final OnTimerStatusObtainedListener listener) {
         final Card card = (Card) arguments.get(TimerActivity.EXTRA_CARD);
 
         TimerServiceUtils.startTimerService(new TimerServiceUtils.OnServiceStartedListener() {
             @Override
             public void onServiceStarted() {
+                //Because service won't yet be started when the first onResume() is called.
+                registerTickListener(arguments, listener);
+                showNotifications(false);
+
                 if(listener != null) {
                     listener.onTimerStatusObtained(
                             TimerService.getInstance().getTimerStatus(),
@@ -33,6 +37,10 @@ public class TimerInteractorImpl implements TimerInteractor {
 
     @Override
     public void registerTickListener(HashMap<String, Object> arguments, final OnTimerStatusObtainedListener listener) {
+        if(TimerService.getInstance() == null) {
+            return;
+        }
+
         final Card card = (Card) arguments.get(TimerActivity.EXTRA_CARD);
 
         TimerService.getInstance().registerListener(new TimerService.TimerServiceListener() {
@@ -47,12 +55,16 @@ public class TimerInteractorImpl implements TimerInteractor {
 
     @Override
     public void unregisterTickListener() {
-        TimerService.getInstance().unregisterListener();
+        if(TimerService.getInstance() != null) {
+            TimerService.getInstance().unregisterListener();
+        }
     }
 
     @Override
     public void showNotifications(boolean show) {
-        TimerService.getInstance().showNotifications(show);
+        if(TimerService.getInstance() != null) {
+            TimerService.getInstance().showNotifications(show);
+        }
     }
 
     @Override

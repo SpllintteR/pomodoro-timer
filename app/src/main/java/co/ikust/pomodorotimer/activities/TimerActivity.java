@@ -68,6 +68,19 @@ public class TimerActivity extends ActionBarActivity implements TimerView {
         localGraph.inject(presenter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        presenter.onEnteredForeground(bundleToHashMap(getIntent().getExtras()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        presenter.onEnteredBackground();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,6 +143,11 @@ public class TimerActivity extends ActionBarActivity implements TimerView {
 
     @Override
     public void showPomodoroDone() {
+        //TODO show dialog
+    }
+
+    @Override
+    public void showBreakDone() {
         //TODO show dialog
     }
 }

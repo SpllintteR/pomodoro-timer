@@ -1,9 +1,11 @@
 package co.ikust.pomodorotimer.storage.models;
 
+import java.io.Serializable;
+
 /**
  * Stores total tracked time and Pomodoros for a Trello Card (task).
  */
-public class TrackedTime {
+public class TrackedTime implements Serializable {
 
     /**
      * Total number of Pomodoros spent on the task.

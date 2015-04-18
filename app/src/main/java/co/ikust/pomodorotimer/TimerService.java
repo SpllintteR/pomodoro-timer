@@ -73,6 +73,14 @@ public class TimerService extends Service {
         return getLocalData().getTimerStatus();
     }
 
+    private void refreshTimerStatus(TimerStatus timerStatus) {
+        getLocalData().refreshTimerStatus(timerStatus);
+
+        if(listener != null) {
+            listener.onTimerStatusChanged(timerStatus);
+        }
+    }
+
     public void registerListener(TimerServiceListener listener) {
         this.listener = listener;
     }
@@ -97,7 +105,7 @@ public class TimerService extends Service {
         timerStatus.setState(newState);
     }
 
-    private Runnable pomodoroCountdownTask = new Runnable() {
+    private Runnable countdownTask = new Runnable() {
         @Override
         public void run() {
             TimerStatus timerStatus = getLocalData().getTimerStatus();
@@ -117,9 +125,7 @@ public class TimerService extends Service {
                     break;
             }
 
-            //Refresh timer status.
-            getLocalData().refreshTimerStatus(timerStatus);
-
+            refreshTimerStatus(timerStatus);
         }
     };
 
@@ -143,10 +149,10 @@ public class TimerService extends Service {
         timerStatus.setListId(card.getListId());
         timerStatus.resetTime();
 
-        getLocalData().refreshTimerStatus(timerStatus);
+        refreshTimerStatus(timerStatus);
 
         //Schedule at fixed rate for precision (counts intervals from start of the execution).
-        runningTimer = executor.scheduleAtFixedRate(pomodoroCountdownTask, 0, Constants.TIMER_TICK_INTERVAL, TimeUnit.MILLISECONDS);
+        runningTimer = executor.scheduleAtFixedRate(countdownTask, 0, Constants.TIMER_TICK_INTERVAL, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -176,7 +182,8 @@ public class TimerService extends Service {
 
         //Update timer status.
         timerStatus.setPaused(true);
-        getLocalData().refreshTimerStatus(timerStatus);
+
+        refreshTimerStatus(timerStatus);
 
         return true;
     }
@@ -200,10 +207,10 @@ public class TimerService extends Service {
 
         //Restore the state of the timer.
         timerStatus.setPaused(false);
-        getLocalData().refreshTimerStatus(timerStatus);
+        refreshTimerStatus(timerStatus);
 
         //Schedule at fixed rate for precision (counts intervals from start of the execution).
-        runningTimer = executor.scheduleAtFixedRate(pomodoroCountdownTask, 0, Constants.POMODORO_TIME, TimeUnit.MILLISECONDS);
+        runningTimer = executor.scheduleAtFixedRate(countdownTask, 0, Constants.POMODORO_TIME, TimeUnit.MILLISECONDS);
 
         return true;
     }
@@ -267,6 +274,6 @@ public class TimerService extends Service {
         timerStatus.setTaskId(null);
         timerStatus.setListId(null);
         timerStatus.setState(TimerStatus.State.DONE);
-        getLocalData().refreshTimerStatus(timerStatus);
+        refreshTimerStatus(timerStatus);
     }
 }

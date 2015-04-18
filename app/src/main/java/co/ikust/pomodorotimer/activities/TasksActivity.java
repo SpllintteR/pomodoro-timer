@@ -2,6 +2,8 @@ package co.ikust.pomodorotimer.activities;
 
 import com.viewpagerindicator.TabPageIndicator;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -17,8 +19,12 @@ import co.ikust.pomodorotimer.R;
 import co.ikust.pomodorotimer.adapters.ViewPagerAdapter;
 import co.ikust.pomodorotimer.fragments.TaskListFragment;
 import co.ikust.pomodorotimer.rest.models.Card;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.getLocalData;
+import static co.ikust.pomodorotimer.PomodoroTimerApplication.getRestService;
 import static co.ikust.pomodorotimer.PomodoroTimerApplication.hasAccessToken;
 
 
@@ -44,7 +50,7 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        if(!hasAccessToken()) {
+        if (!hasAccessToken()) {
             showSettings();
         } else {
             addTabs();
@@ -58,7 +64,7 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
     protected void onResume() {
         super.onResume();
 
-        if(hasAccessToken() && adapter.getCount() == 0) {
+        if (hasAccessToken() && adapter.getCount() == 0) {
             addTabs();
         }
     }
@@ -101,7 +107,7 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
     //region TaskListCallbacks implementation
     @Override
     public void showLoading(boolean loading) {
-        if(loading) {
+        if (loading) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.GONE);
@@ -109,11 +115,51 @@ public class TasksActivity extends ActionBarActivity implements TaskListFragment
     }
 
     @Override
-    public void startTimer(Card task) {
-        //TODO move card to doing list
+    public void startTimer(final Card task) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.start_time_tracking));
+        builder.setMessage(String.format(getString(R.string.start_time_tracking_message), task.getName()));
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getRestService().moveCard(
+                        task.getId(),
+                        getLocalData().getDoingList().getId(),
+                        new Callback<Object>() {
+                            @Override
+                            public void success(Object o, Response response) {
+                                Intent intent = new Intent(TasksActivity.this, TimerActivity.class);
+                                intent.putExtra(TimerActivity.EXTRA_CARD, task);
+                                startActivity(intent);
+                            }
 
-        Intent intent = new Intent(this, TimerActivity.class);
-        startActivity(intent);
+                            @Override
+                            public void failure(RetrofitError error) {
+                                if (error.getResponse() != null && error.getResponse().getStatus() == 401) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(TasksActivity.this);
+                                    builder.setTitle(R.string.error);
+                                    builder.setMessage("Your Trello token has expired, please refresh it.");
+                                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(TasksActivity.this, ConfigActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(TasksActivity.this);
+                                    builder.setTitle(R.string.error);
+                                    builder.setMessage(getString(R.string.internet_connection_error));
+                                    builder.setPositiveButton(R.string.ok, null);
+                                    builder.show();
+                                }
+                            }
+                        });
+            }
+        });
+
+        builder.setNegativeButton(R.string.no, null);
+        builder.show();
     }
     //endregion
 }

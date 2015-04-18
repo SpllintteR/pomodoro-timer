@@ -5,7 +5,10 @@ import co.ikust.pomodorotimer.rest.models.List;
 import co.ikust.pomodorotimer.rest.models.Member;
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Interface that defines REST APIs used in application.
@@ -27,6 +30,20 @@ public interface RestService {
     void getList(
             @Path("id") String listId,
             Callback<List> callback
+    );
+
+    @PUT("/1/cards/{cardId}")
+    void moveCard(
+            @Path("cardId") String cardId,
+            @Query("idList") String listId,
+            Callback<Object> callback
+    );
+
+    @POST("/1/cards/{cardId}/actions/comments")
+    void addComment(
+            @Path("cardId") String cardId,
+            @Query("text") String comment,
+            Callback<Object> callback
     );
 
 }

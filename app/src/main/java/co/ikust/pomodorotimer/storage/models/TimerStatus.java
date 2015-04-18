@@ -24,6 +24,13 @@ public class TimerStatus {
 
     private long time;
 
+    public TimerStatus() {
+        taskId = null;
+        listId = null;
+        state = State.DONE;
+        paused = false;
+        time = 0;
+    }
 
     public String getTaskId() {
         return taskId;
