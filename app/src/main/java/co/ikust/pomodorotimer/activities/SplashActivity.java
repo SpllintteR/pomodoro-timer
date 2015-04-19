@@ -23,12 +23,11 @@ public class SplashActivity extends Activity {
 
             Intent intent = new Intent(this, TasksActivity.class);
             startActivity(intent);
+            finish();
         } else {
             Intent intent = new Intent(this, TasksActivity.class);
             startActivity(intent);
+            finish();
         }
-
-
-
     }
 }

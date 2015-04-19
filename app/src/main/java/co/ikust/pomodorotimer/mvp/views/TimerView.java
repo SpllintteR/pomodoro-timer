@@ -1,5 +1,7 @@
 package co.ikust.pomodorotimer.mvp.views;
 
+import java.util.HashMap;
+
 /**
  * Created by ivan on 16/04/15.
  */
@@ -23,4 +25,5 @@ public interface TimerView {
 
     void showBreakDone();
 
+    HashMap<String, Object> getArguments();
 }

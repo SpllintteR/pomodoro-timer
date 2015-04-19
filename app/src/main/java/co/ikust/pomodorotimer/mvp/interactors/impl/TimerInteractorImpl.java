@@ -71,10 +71,6 @@ public class TimerInteractorImpl implements TimerInteractor {
     public void startPomodoroCountDown(HashMap<String, Object> arguments, OnTimerStatusObtainedListener listener) {
         Card card = (Card) arguments.get(TimerActivity.EXTRA_CARD);
         TimerService.getInstance().startCountDown(card, TimerStatus.State.POMODORO_COUNTDOWN);
-
-        if(listener != null) {
-            listener.onTimerStatusObtained(TimerService.getInstance().getTimerStatus(), card);
-        }
     }
 
     @Override

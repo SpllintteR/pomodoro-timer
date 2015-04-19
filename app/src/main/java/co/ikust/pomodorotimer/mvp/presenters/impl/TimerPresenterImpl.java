@@ -34,7 +34,7 @@ public class TimerPresenterImpl implements TimerPresenter, TimerInteractor.OnTim
 
         switch(timerStatus.getState()) {
             case POMODORO_COUNTDOWN:
-                view.setCurrentTime(Constants.POMODORO_TIME - card.getTrackedTime().getTime());
+                view.setCurrentTime(Constants.POMODORO_TIME - timerStatus.getTime());
                 break;
 
             case POMODORO_FINISHED:
@@ -42,16 +42,20 @@ public class TimerPresenterImpl implements TimerPresenter, TimerInteractor.OnTim
                 view.showPomodoroDone();
                 break;
             case SHORT_BREAK_COUNTDOWN:
-                view.setCurrentTime(Constants.SHORT_BREAK_TIME - card.getTrackedTime().getTime());
+                view.setCurrentTime(Constants.SHORT_BREAK_TIME - timerStatus.getTime());
                 break;
 
             case LONG_BREAK_COUNTDOWN:
-                view.setCurrentTime(Constants.LONG_BREAK_TIME - card.getTrackedTime().getTime());
+                view.setCurrentTime(Constants.LONG_BREAK_TIME - timerStatus.getTime());
                 break;
 
             case BREAK_FINISHED:
                 view.setCurrentTime(0);
                 view.showBreakDone();
+                break;
+
+            case DONE:
+                interactor.startPomodoroCountDown(view.getArguments(), this);
                 break;
 
             default:

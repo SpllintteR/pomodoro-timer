@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -149,5 +151,10 @@ public class TimerActivity extends ActionBarActivity implements TimerView {
     @Override
     public void showBreakDone() {
         //TODO show dialog
+    }
+
+    @Override
+    public HashMap<String, Object> getArguments() {
+        return bundleToHashMap(getIntent().getExtras());
     }
 }

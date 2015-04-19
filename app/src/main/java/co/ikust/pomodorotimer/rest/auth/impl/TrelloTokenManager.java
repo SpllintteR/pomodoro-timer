@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.text.InputType;
 import android.widget.EditText;
 
+import co.ikust.pomodorotimer.R;
 import co.ikust.pomodorotimer.rest.TrelloConstants;
 import co.ikust.pomodorotimer.rest.auth.TokenManager;
 
@@ -31,7 +32,7 @@ public class TrelloTokenManager implements TokenManager {
     @Override
     public void refreshToken(Context activityContext, final RefreshTokenCallback callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activityContext);
-        builder.setTitle("Please input Trello token");
+        builder.setTitle(activityContext.getString(R.string.input_trello_token));
 
         // Set up the input
         final EditText input = new EditText(activityContext);
